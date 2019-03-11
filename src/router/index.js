@@ -40,6 +40,11 @@ export const constantRouterMap = [
         meta: { title: '首页', icon: 'dashboard', noCache: true }
       }
     ]
+  },
+  {
+    path:'/pesonalCenter',
+    component:() => import('@/views/personalCenter/index'),
+    hidden:true
   }
 
 
@@ -69,7 +74,7 @@ export const asyncRouterMap = [
       {
         path:'serviceadmin',
         name:'serviceadmin',
-        Component: () => import('@/views/adminlist/index'),
+        component: () => import('@/views/adminlist/serviceAdmin'),
         meta:{
           title:'服务管理员',
           icon:'serviceadmin_list',
@@ -79,7 +84,7 @@ export const asyncRouterMap = [
       {
         path:'businessadmin',
         name:'businessadmin',
-        Component:()=>import('@/views/adminlist/index'),
+        component:()=>import('@/views/adminlist/businessAdmin'),
         meta:{
           title:'商业管理员',
           icon:'businessadmin_list',

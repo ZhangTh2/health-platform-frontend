@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">欢迎：{{getAdminName}}</div>
-    <div class="dashboard-text">{{getAdminType}}</div>
+    <div class="dashboard-text">欢迎：{{getAdminName}}，{{getAdminType}}</div>
   </div>
+
 
 </template>
 
@@ -29,7 +29,8 @@ export default {
       else if(this.$store.getters.role.role===3) return '业务管理员'
       else $store.dispatch('/404')
     }
-  }
+  },
+
 }
 </script>
 

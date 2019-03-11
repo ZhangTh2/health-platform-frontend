@@ -1,8 +1,7 @@
 <template>
-  <section class="app-main">
-    <el-alert>wadaw</el-alert>
-    <h1>dwdwd</h1>
-  </section>
+  <el-dialog title="修改个人信息" visible="true">
+  </el-dialog>
+
 </template>
 
 <script>

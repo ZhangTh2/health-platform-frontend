@@ -2,7 +2,9 @@
 
   <div class="login-container">
     <el-form  ref="loginForm" :model="loginForm"  :rules ="loginRules" class= "login-form" label-position="left">
+      <div class="title-container">
       <h3 class="title">Admin Login</h3>
+      </div>
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -113,8 +115,22 @@
 
 
 <style rel="stylesheet/scss" lang="scss">
-  $bg:#2d3a4b;
+  /* 修复input 背景不协调 和光标变色 */
+  /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
+
+  $bg:#283443;
   $light_gray:#eee;
+  $cursor: #fff;
+
+  @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
+    .login-container .el-input input{
+      color: $cursor;
+      &::first-line {
+        color: $light_gray;
+      }
+    }
+  }
+
   /* reset element-ui css */
   .login-container {
     .el-input {
@@ -124,14 +140,15 @@
       input {
         background: transparent;
         border: 0px;
-         -webkit-appearance: none;
+        -webkit-appearance: none;
         border-radius: 0px;
         padding: 12px 5px 12px 15px;
         color: $light_gray;
         height: 47px;
+        caret-color: $cursor;
         &:-webkit-autofill {
-           -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
-           -webkit-text-fill-color: #fff !important;
+          -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
+          -webkit-text-fill-color: $cursor !important;
         }
       }
     }
@@ -148,19 +165,19 @@
   $bg:#2d3a4b;
   $dark_gray:#889aa4;
   $light_gray:#eee;
+
   .login-container {
-    position: fixed;
-    height: 100%;
+    min-height: 100%;
     width: 100%;
     background-color: $bg;
+    overflow: hidden;
     .login-form {
-      position: absolute;
-      left: 0;
-      right: 0;
+      position: relative;
       width: 520px;
       max-width: 100%;
-      padding: 35px 35px 15px 35px;
-      margin: 120px auto;
+      padding: 160px 35px 0;
+      margin: 0 auto;
+      overflow: hidden;
     }
     .tips {
       font-size: 14px;
@@ -179,13 +196,21 @@
       width: 30px;
       display: inline-block;
     }
-    .title {
-      font-size: 26px;
-      font-weight: 400;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
+    .title-container {
+      position: relative;
+      .title {
+        font-size: 26px;
+        color: $light_gray;
+        margin: 0px auto 40px auto;
+        text-align: center;
+        font-weight: bold;
+      }
+      .set-language {
+        color: #fff;
+        position: absolute;
+        top: 5px;
+        right: 0px;
+      }
     }
     .show-pwd {
       position: absolute;
@@ -196,5 +221,10 @@
       cursor: pointer;
       user-select: none;
     }
+    .thirdparty-button {
+      position: absolute;
+      right: 0;
+      bottom: 6px;
+    }
   }
-  </style>
+</style>
