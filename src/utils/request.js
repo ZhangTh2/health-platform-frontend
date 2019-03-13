@@ -37,6 +37,7 @@ service.interceptors.response.use(
     console.log("获取")
     const res = response.data
     console.log(res)
+
     if (res.status !== 10000) {
       Message({
         message: res.msg,

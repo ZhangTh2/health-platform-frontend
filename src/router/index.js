@@ -28,6 +28,7 @@ export const constantRouterMap = [
     component:() => import('@/views/404'),
     hidden:true
   },
+
   {
     path: '/',
     component: Layout,
@@ -61,13 +62,14 @@ export default new Router({
 //异步挂载的路由
 //动态需要根据权限加载的路由表
 export const asyncRouterMap = [
+
   {
     path:'/adminlist',
     component:Layout,
-    redirect:'/adminlist/index',
+   // redirect:'/adminlist/index',
     meta:{
       title:'管理员列表',
-      icon:'adminuser_list',
+      icon:'serviceadmin_list',
       roles:[1]
     },
     children:[
@@ -77,7 +79,7 @@ export const asyncRouterMap = [
         component: () => import('@/views/adminlist/serviceAdmin'),
         meta:{
           title:'服务管理员',
-          icon:'serviceadmin_list',
+          icon:'adminuser_list',
           roles:[1]
         }
       },
@@ -86,15 +88,25 @@ export const asyncRouterMap = [
         name:'businessadmin',
         component:()=>import('@/views/adminlist/businessAdmin'),
         meta:{
-          title:'商业管理员',
+          title:'业务管理员',
           icon:'businessadmin_list',
           roles:[1]
         }
       }
     ]
   },
-
-
+  {
+    path: '/serviceCategory',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/serviceCategory/index'),
+        name: 'serviceCategory',
+        meta: { title: '服务类别', icon: 'category',roles:[1] }
+      }
+    ]
+  },
 
 
 

@@ -11,6 +11,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      '/ips':{
+        target:'http://localhost:1235',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/ips':'/'
+        }
+      },
       '/api':{
         target:'http://localhost:1234',
         changeOrigin:true,
