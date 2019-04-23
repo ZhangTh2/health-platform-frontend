@@ -1,9 +1,8 @@
 <template>
-
   <div class="login-container">
     <el-form  ref="loginForm" :model="loginForm"  :rules ="loginRules" class= "login-form" label-position="left">
       <div class="title-container">
-      <h3 class="title">Admin Login</h3>
+      <h4 class="title">Welcome Back</h4>
       </div>
       <el-form-item prop="username">
         <span class="svg-container">
@@ -27,7 +26,7 @@
         </span>
       </el-form-item>
       <el-form-item>
-        <el-button :loading="loading" type="primary" style="width:100%;"@click.native.prevent="handleLogin">
+        <el-button :loading="loading" type="primary"  style="width:100%;"@click.native.prevent="handleLogin">
           登录
         </el-button>
       </el-form-item>
@@ -36,6 +35,11 @@
         <!--<span> password: admin</span>-->
       <!--</div>-->
     </el-form>
+    <div class="text-center">
+      <!--<a class="small" style="color: #ffffff;"href="/register">Create an Account!</a>-->
+      <router-link class="small" style="color: #ffffff;"to="/register">Create an Account!</router-link>
+      <router-view ></router-view>
+    </div>
   </div>
 
 </template>
@@ -155,7 +159,7 @@
     .el-form-item {
       border: 1px solid rgba(255, 255, 255, 0.1);
       background: rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
+      border-radius: 3px;
       color: #454545;
     }
   }

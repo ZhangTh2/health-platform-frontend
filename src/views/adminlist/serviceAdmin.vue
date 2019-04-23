@@ -21,7 +21,7 @@
       border
       fit
       highlight-current-row
-      style="width:67%"
+      style="width:100%"
       :default-sort="{prop:'id',order:'ascending'}"
       @sort-change="sortChange">
       <el-table-column
@@ -29,34 +29,34 @@
         label="编号"
         sortable="custom"
         align="center"
-        width="100">
+        width="150">
       </el-table-column>
       <el-table-column
         prop="username"
         label="用户名"
-        width="180">
+        width="200">
       </el-table-column>
       <el-table-column
         prop="name"
         label="姓名"
-        width="150">
+        width="200">
       </el-table-column>
       <el-table-column
         prop="phone"
         label="手机"
-        width="180">
+        width="250">
       </el-table-column>
       <el-table-column
         prop="email"
         label="邮箱"
-        width="180">
+        width="200">
       </el-table-column>
-      <el-table-column label="状态" class-name="status-col" width="100">
+      <el-table-column label="状态" class-name="status-col" width="200">
         <template slot-scope="scope">
           <el-tag :type="scope.row.checked | statusFilter">{{ handlestatus(scope.row.checked)}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="225" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center"  class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row.id)">编辑</el-button>
           <el-button v-if="scope.row.checked==1" type="danger" size="mini" @click="handleDelete(scope.row)">离职
@@ -158,23 +158,23 @@
       }
     },
     data() {
+
       var validateName = (rule, value, callback) => {
+        if(this.dialogStatus==='编辑管理员') callback()
         var pattern = /^[\w\u4e00-\u9fa5]{5,12}$/g
         if (value === '') {
           callback(new Error('请输入用户名'));
         } else if(!pattern.test(value)){
           callback(new Error('5-12个字母/汉字/数字/下划线组成'))
         } else {
-          if(this.dialogStatus==='添加管理员') {
+
             ifexistAdmin(value).then(response => {
               console.log(response.data)
-              if (response.data == 1)
+              if (response.data !== 0)
                 callback(new Error('该用户名已经被注册'))
               else callback();
             })
-          }else{
-            callback();
-          }
+
         }
       };
       var validatePass = (rule, value, callback) => {
@@ -231,6 +231,9 @@
           else if(!pattern.test(value)){
             callback(new Error('请输入正确格式的银行卡号'))
           }
+          else{
+            callback();
+          }
         }
         else{
           callback();
@@ -283,7 +286,7 @@
           }],
           phone:[{validator:validatePhone,trigger:'blur'}],
           email:[{validator:validateEmail,trigger:'blur'}],
-          accountNumber:[{validator:validateAccount,trigger:'blur'}],
+         // accountNumber:[{validator:validateAccount,trigger:'blur'}],
         },
         bankOptions: [{
           value: '0',

@@ -96,3 +96,22 @@ export function getSelf(token) {
     params:{token}
   })
 }
+
+//自己申请Admin
+export  function insertAdmin(admin) {
+  console.log("申请注册Admin")
+  return request ({
+    url:'/api/admin/insertAdmin',
+    method:'post',
+    data:admin
+  })
+}
+
+//查询是否需有处理的事项
+export  function  getUnckeck() {
+  console.log("查询未审核数量")
+  return request({
+    url:'/api/admin/getUnckeck',
+    method:'get',
+  })
+}

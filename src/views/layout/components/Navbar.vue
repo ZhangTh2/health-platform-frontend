@@ -21,6 +21,10 @@
         <el-tooltip content="换肤" effect="dark" placement="bottom">
           <theme-picker class="theme-switch right-menu-item"/>
         </el-tooltip>
+
+        <el-tooltip content="待办事项" effect="dark" placement="bottom">
+          <todolist class="todolist right-menu-item"/>
+        </el-tooltip>
       </template>
 
       <el-dropdown class="avatar-container right-menu-item" trigger="hover">
@@ -101,7 +105,6 @@
 
 </template>
 
-uj
 
 <script>
 import { mapGetters } from 'vuex'
@@ -111,6 +114,7 @@ import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import LangSelect from '@/components/LangSelect'
+import Todolist from '@/components/Todolist'
 import ThemePicker from '@/components/ThemePicker'
 import {getSelf,updateAdmin} from  '@/api/admin'
 import { getToken } from '@/utils/auth' // 验权
@@ -122,7 +126,8 @@ export default {
     Screenfull,
     SizeSelect,
     LangSelect,
-    ThemePicker
+    ThemePicker,
+    Todolist
   },
   computed: {
     ...mapGetters([
@@ -181,11 +186,14 @@ export default {
       console.log('bankaccount是'+value)
       var pattern = /^([1-9]{1})(\d{15}|\d{18})$/
       if(value!=='') {
-        if(this.Temp.bankType===''){
+        if(this.selfTemp.bankType===''){
           callback(new Error("请先选择银行类型"))
         }
         else if(!pattern.test(value)){
           callback(new Error('请输入正确格式的银行卡号'))
+        }
+        else {
+          callback();
         }
       }
       else{
@@ -318,6 +326,9 @@ export default {
       vertical-align: top;
     }
     .theme-switch {
+      vertical-align: 15px;
+    }
+    .todolist{
       vertical-align: 15px;
     }
     .avatar-container {

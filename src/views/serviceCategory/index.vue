@@ -6,16 +6,17 @@
       <!--active-text="展开分类"-->
       <!--@change="changeSwitch()">-->
     <!--</el-switch>-->
-    <h3>服务分类列表</h3>
+    <h2>服务分类列表</h2>
     <el-input
       placeholder="输入关键字进行过滤"
       v-model="filterText">
     </el-input>
     <br />
     <br />
+
      <el-dialog :title="dialogStatus" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm"  :model="dataTemp" autocomplete="new" label-position="left" label-width="80px" style="width:400px;margin-left: 50px;">
-        <el-form-item label="商品名" prop="label">
+        <el-form-item label="服务分类名" prop="label">
           <el-input  v-model="dataTemp.label" ></el-input>
         </el-form-item>
       </el-form>
@@ -29,7 +30,7 @@
       :data="data"
       :props="defaultProps"
       node-key="id"
-      :default-expand-all="expand"
+      :default-expand-all=false
       :filter-node-method="filterNode"
       :expand-on-click-node="true"
       :highlight-current="true"
@@ -58,12 +59,16 @@
         </span>
       </span>
     </el-tree>
+    <div style="float: left;height: 40px">
+    <el-input placeholder="添加服务分类" style="width:200px"  v-model="category" @keyup.enter.native="handleInsert()"></el-input>
+    <el-button type="primary" @click="handleInsert()">确定</el-button>
+    </div>
   </div>
 </div>
 </template>
 <script>
   import { ListSeviceCategory } from "../../api/serviceCategory";
-  import { update,create,remove} from "../../api/serviceCategory";
+  import { update,create,remove,insert} from "../../api/serviceCategory";
 
   export default {
      watch: {
@@ -87,6 +92,7 @@
           label: 'label'
         },
         dialogFormVisible:false,
+        category:''
       }
     },
     created() {
@@ -120,6 +126,25 @@
            }
            }
          )
+      },
+      handleInsert() {
+         insert(this.category).then(response => {
+           if(response.status!=10000){
+             this.$message({
+               type: 'error',
+               message: '创建大类失败'
+             })
+           }else{
+             ListSeviceCategory().then((response) => {
+               this.data =response.data
+             })
+             this.category=''
+             this.$message({
+               type: 'success',
+               message: '添加成功'
+             })
+           }
+         })
       },
       handleCreate(row) {
          this.dialogStatus = '添加服务分类'

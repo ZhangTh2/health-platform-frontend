@@ -5,7 +5,7 @@ import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // 验权
 
-const whitelists=['/adminlogin']  //不重定向白名单
+const whitelists=['/adminlogin','/register']  //不重定向白名单
 //全局钩子，在路由改变之前使用，这里用做进行权限的控制
 //to：即将进入的路由对象
 //from：即将离开的当前界面

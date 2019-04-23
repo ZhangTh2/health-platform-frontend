@@ -19,10 +19,17 @@ module.exports = {
         }
       },
       '/api':{
-        target:'http://localhost:1234',
+        target:'http://192.168.12.109:1234',
         changeOrigin:true,
         pathRewrite:{
           '^/api':'/'
+        }
+      },
+      '/abs':{
+        target:'http://localhost:1236',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/abs':'/'
         }
       }
     },
