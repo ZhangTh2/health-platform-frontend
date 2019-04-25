@@ -168,15 +168,26 @@ export const asyncRouterMap = [
   {
     path:'/turbine',
     component:Layout,
+    meta:{
+      title:'监控信息查看',
+      icon:'turbine',
+      roles:[1,2]
+    },
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/turbine/index'),
-        name: 'turbine',
+        path:'eureka',
+        component:() => import('@/views/turbine/eureka'),
+        name:'eureka',
         meta:{
-          title:'监控信息查看',
-          icon:'turbine',
-          roles:[1,2]
+          title:"Eureka"
+        }
+      },
+      {
+        path:'hystrix-dashboard',
+        component:() => import('@/views/turbine/hystrix-dashboard'),
+        name:'Hystrix-Dashboard',
+        meta:{
+          title:"Hystrix-Dashboard"
         }
       }
     ]
