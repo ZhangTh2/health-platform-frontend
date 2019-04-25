@@ -1,4 +1,4 @@
-# health-platform-fronted
+# health-platform-frontend
 
 > health-platform'frontend based vue
 
