@@ -15,7 +15,7 @@
     <br />
 
      <el-dialog :title="dialogStatus" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm"  :model="dataTemp" autocomplete="new" label-position="left" label-width="80px" style="width:400px;margin-left: 50px;">
+      <el-form ref="dataForm"  :model="dataTemp" autocomplete="new" label-position="left" label-width="100px" style="width:500px;margin-left: 50px;">
         <el-form-item label="服务分类名" prop="label">
           <el-input  v-model="dataTemp.label" ></el-input>
         </el-form-item>

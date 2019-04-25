@@ -4,7 +4,7 @@
       <svg-icon class-name="size-icon" :icon-class="iconClass"/>
     </div>
     <el-dropdown-menu slot="dropdown" style="margin-top: 40px;margin-left: 10px">
-      <el-dropdown-item v-for="item in this.notify">{{item}}
+      <el-dropdown-item v-for="(item,key) in this.notify" :key="key">{{item}}
       </el-dropdown-item>
 
     </el-dropdown-menu>

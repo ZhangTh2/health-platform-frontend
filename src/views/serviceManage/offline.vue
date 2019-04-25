@@ -29,7 +29,6 @@
     <el-table
       v-loading="listloading"
       :data="list"
-      border
       fit
       highlight-current-row
       style="width:100%"
@@ -85,12 +84,12 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchService" />
 
 
-    <el-dialog :title="dialogStatus":visible.sync="dialogFormVisible">
+    <el-dialog :title="dialogStatus":visible.sync="dialogFormVisible" @close='closeDialog'>
       <el-form ref="dataForm"  :model="this.Temp" :rules="rules" :is-file="true" autocomplete="new" label-position="left" label-width="80px" style="width:600px;margin-left: 50px;">
         <el-form-item label="服务名称" prop="serviceName">
           <el-input   type ="text"   v-model="Temp.serviceName" style="width: 300px" ></el-input>
         </el-form-item>
-        <el-form-item label="服务类别" prop="category_id">
+        <el-form-item label="服务类别" prop="categoryId">
           <el-cascader
             v-model="selectedOptions1"
             @change="handleOptions1"
@@ -208,7 +207,7 @@
         Temp:{
           id:undefined,
           serviceName:'',
-          category_id:'',
+          categoryId:'',
           serviceImg:'',
           price:'',
           introduction:'',
@@ -243,11 +242,14 @@
       }
     },
     methods:{
+      closeDialog(){
+        this.resetTemp()
+      },
       handleOptions(value) {
         this.listQuery.category_id = value[value.length-1]
       },
       handleOptions1(value) {
-        this.Temp.category_id = value[value.length-1]
+        this.Temp.categoryId = value[value.length-1]
         this.Temp.format = value.toString()
       },
       handleFilter() {
@@ -262,9 +264,13 @@
         this.Temp.id = row.id
         getInfo(row.id).then(response => {
           this.Temp=response.data
+          if(this.Temp.format) {
+            var se =this.Temp.format.split(',')
+            this.selectedOptions1=se.map(Number)
+          }
+          this.dialogFormVisible = true
+          this.dialogStatus = '修改服务'
         })
-        this.dialogFormVisible = true
-        this.dialogStatus = '修改服务'
       },
       handleDelete(row){
         updateChecked(row.id,3).then(response =>{
@@ -405,14 +411,14 @@
       },
       resetTemp(){
         this.Temp.serviceName='',
-          this.Temp.category_id='',
+          this.Temp.categoryId='',
           this.Temp.serviceImg='',
           this.Temp.price='',
           this.Temp.introduction='',
           this.Temp.detailIntroduction='',
           this.Temp.format='',
           this.Temp.id=undefined
-        this.selectedOptions1=''
+        this.selectedOptions1=[]
       },
       fetchServiceCategories(){
         ListSeviceCategory1().then((response) => {

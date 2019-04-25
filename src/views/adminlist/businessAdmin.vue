@@ -18,7 +18,6 @@
     <el-table
       v-loading="listloading"
       :data="list"
-      border
       fit
       highlight-current-row
       style="width:100%"
@@ -70,7 +69,7 @@
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchDataByCondition" />
 
-    <el-dialog :title="dialogStatus" :visible.sync="dialogFormVisible">
+    <el-dialog :title="dialogStatus" :visible.sync="dialogFormVisible" @close='closeDialog'>
       <el-form ref="dataForm" :rules="rules" :model="Temp" autocomplete="new" label-position="left" label-width="80px" style="width:400px;margin-left: 50px;">
         <el-form-item label="用户名" prop="username">
           <el-input type="text"   style="display: none"/>
@@ -315,6 +314,9 @@
       this.fetchDataByCondition()
     },
     methods: {
+      closeDialog(){
+        this.resetTemp()
+      },
       handleFilter() {
         this.listQuery.page = 1
         this.fetchDataByCondition()

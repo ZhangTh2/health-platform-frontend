@@ -58,7 +58,7 @@ export const constantRouterMap = [
 
 
 export default new Router({
-  mode:'history',
+ // mode:'history',
   scrollBehavior: () => ({ y: 0 }),
   routes:constantRouterMap
 })
@@ -114,12 +114,12 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/api',
+    path: '/api/:id/:name',
     component: Layout,
     hidden:true,
     children: [
       {
-        path: 'index',
+        path: '',
         component: () => import('@/views/api/index'),
         name: 'api',
         meta:{title:'api管理',icon:'',roles:[1,2]}
