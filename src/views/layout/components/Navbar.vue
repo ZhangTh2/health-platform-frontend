@@ -30,7 +30,8 @@
       <el-dropdown class="avatar-container right-menu-item" trigger="hover">
         <div class="avatar-wrapper">
           <!--<img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">-->
-          <img src="@/assets/ava.png" class="user-avatar">
+          <img v-if="this.selfTemp.avatar" :src="this.selfTemp.avatar" class="user-avatar">
+          <img v-else src="@/assets/ava.png" class="user-avatar">
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -46,6 +47,10 @@
           <!--</router-link>-->
           <el-dropdown-item divided>
             <span style="display:block;" @click="handleUpdateSelf">修改个人信息</span>
+          </el-dropdown-item>
+          <el-dropdown-item divided>
+            <span v-if="avatar" style="display:block;" @click="handleUpdateAvatar">修改头像</span>
+            <span v-else style="display:block;" @click="handleUploadAvatar">上传头像</span>
           </el-dropdown-item>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">退出登录</span>
@@ -99,9 +104,36 @@
 
     </div>
 
+    <el-dialog :title="dialogStatus":visible.sync="dialogFormVisible" >
+      <el-form>
+      <el-form-item >
+        <el-upload
+          class="avatar-uploader"
+          action="/api/admin/insertImg"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <img v-if="imgUrl" :src="imgUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+        <div v-if="dialogStatus==='上传头像'">
+          <span  v-if="imgUrl">已选择{{this.imageName}},可点击图片更改</span>
+          <span  v-else >只能上传单张10M以下的 PNG、JPG、GIFJPEG格式的图片</span>
+        </div>
+        <div v-else>
+          <span  v-if="imgUrl">可点击图片更改</span>
+          <span  v-else >只能上传单张10M以下的 PNG、JPG、GIFJPEG格式的图片</span>
+        </div>
+      </el-form-item>
+
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="handleCancel()">取消</el-button>
+        <!--<el-button type="primary" @click="dialogStatus==='添加管理员'?createData():updateData()">确认</el-button>-->
+         <el-button type="primary" @click="updateAvatar()">确认</el-button>
+      </span>
+    </el-dialog>
   </div>
-
-
 
 </template>
 
@@ -116,7 +148,7 @@ import SizeSelect from '@/components/SizeSelect'
 import LangSelect from '@/components/LangSelect'
 import Todolist from '@/components/Todolist'
 import ThemePicker from '@/components/ThemePicker'
-import {getSelf,updateAdmin} from  '@/api/admin'
+import {getSelf,updateAdmin,updateAvata} from  '@/api/admin'
 import { getToken } from '@/utils/auth' // 验权
 export default {
   components: {
@@ -137,6 +169,7 @@ export default {
       'device'
     ])
   },
+
   data() {
     var validatePass = (rule, value, callback) => {
       var pattern = /^[\w\u4e00-\u9fa5]{5,12}$/g
@@ -210,10 +243,15 @@ export default {
         password2: '',
         phone: '',
         email: '',
+        avatar:'',
         bankType: '',
         accountNumber: '',
       },
+      dialogFormVisible:false,
+      dialogStatus:'',
       dialogFormVisible1: false,
+      imageName:'',
+      imgUrl:'',
       rules: {
         password: [{validator: validatePass, trigger: 'blur'}, {
           required: true,
@@ -254,19 +292,79 @@ export default {
       }],
     }
   },
+  created(){
+    this.getSelfData()
+  },
   methods: {
+    getSelfData(){
+      getSelf(getToken()).then(response => {
+        this.selfTemp = Object.assign({}, response.data)
+      })
+    },
+    updateAvatar(){
+        updateAvata(this.selfTemp.id,this.imgUrl).then(response =>{
+          if(response.status!=10000){
+            this.$message({
+              type: 'error',
+              message: '修改头像失败'
+            })
+          }else{
+            this.$message({
+              type: 'success',
+              message: '修改头像成功'
+            })
+            this.selfTemp.avatar=this.imgUrl
+            // this.$store.dispatch('updateavatar').then(() => {
+            //   location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+            // })
+          }
+        })
+      this.dialogFormVisible=false
+    },
+    beforeAvatarUpload(file) {
+      const filetype = file.type ;
+      var isAllow = true;
+      const isLt10M = file.size / 1024 / 1024 < 10;
+
+      if (filetype!=='image/png'&&filetype!=='image/jpg'&&filetype!=='image/gif'&&filetype!=='image/jpeg') {
+        isAllow = false;
+        this.$message.error('上传图片只能是 png、jpg、jpeg、gif 格式!');
+      }
+      if (!isLt10M) {
+        this.$message.error('上传图片大小不能超过 10MB!');
+      }
+      return isAllow && isLt10M;
+    },
+    handleAvatarSuccess(res, file) {
+      console.log('图片上传的res是'+res.data)
+      if(res.status!=10000){
+        this.$message({
+          type: 'error',
+          message: '上传失败'
+        })
+      }else{
+        this.imageName = file.name
+        this.imgUrl = res.data
+      }
+    },
+    handleUpdateAvatar(){
+      this.dialogStatus='更新头像',
+        this.imgUrl=this.selfTemp.avatar
+      this.dialogFormVisible=true
+    },
+    handleUploadAvatar(){
+      this.dialogStatus='上传头像',
+      this.dialogFormVisible=true
+    },
     toggleSideBar() {
       this.$store.dispatch('toggleSideBar')
     },
     handleUpdateSelf() {
-      getSelf(getToken()).then(response => {
-        this.selfTemp = Object.assign({},response.data)
         this.selfTemp.password2=this.selfTemp.password
         this.dialogFormVisible1 = true
         this.$nextTick(() => {
           this.$refs['dataForm'].clearValidate()
         })
-      })
     },
     update() {
       this.$refs['dataForm'].validate((valid) => {
@@ -353,5 +451,28 @@ export default {
       }
     }
   }
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>

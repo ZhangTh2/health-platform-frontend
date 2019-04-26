@@ -115,3 +115,12 @@ export  function  getUnckeck() {
     method:'get',
   })
 }
+
+//更新用户头像
+export function updateAvata(id,avatar) {
+  return request({
+    url:'/api/admin/updateAvata',
+    method:'get',
+    params:{id,avatar}
+  })
+}

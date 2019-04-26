@@ -59,7 +59,12 @@ const user = {
         })
       })
     },
-
+    updateavatar({commit,state},avatar) {
+      return new Promise((resolve, reject) => {
+          commit('SET_AVATAR', avatar)
+          resolve()
+        })
+    },
     GetAdminInfo({commit,state}) {
       //ES6中的Promise(),简单理解就是resolve是成功后的操作,reject是失败后的操作，
       return new Promise((resolve,reject) =>{
@@ -79,6 +84,12 @@ const user = {
            // Lockr.set('role',data.role)
           }
           commit('SET_NAME',data.username)
+
+          if(data.avatar===''){
+            console.log("无头像")
+          }else {
+            commit('SET_AVATAR',data.avatar)
+          }
           //Lockr.set('name',data.name)
           resolve(response)
           //设置头像，暂时没有
