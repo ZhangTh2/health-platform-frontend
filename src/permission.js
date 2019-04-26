@@ -18,41 +18,34 @@ const whitelists=['/adminlogin','/register']  //不重定向白名单
 router.beforeEach((to,from,next) => {
   NProgress.start()
   if(getToken()) {
-    console.log("xxxxxx")
     if(to.path==='/adminlogin') {
       next({path:'/'})
       NProgress.done()
     }else{
-      console.log("开始判断role")
       console.log(store.getters.role)
       if(store.getters.role==='') {
-        console.log("没有role")
         store.dispatch('GetAdminInfo').then(res =>{
-          console.log('动态添加路由')
           const role = res.data.role
            store.dispatch('GenerateRoutes', { role }).then(() => { // 生成可访问的路由表
             router.addRoutes(store.getters.addRouters)// 动态添加可访问路由表
-            next({ ...to, replace: true })// hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+           // next({ ...to, replace: true })// hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
           })
           next()
           }
         ).catch((err) => {
           //获取用户信息时出错则让用户登出再重新登录
           // console.log("error is"+err)
-          console.log("清除登录")
           store.dispatch('FedLogOut').then(() => {
             Message.error(err||"验证未通过，请重新登录")
             next({path:'/adminlogin'})
           })
         })
       }else {
-        console.log("加载主页")
         next()
 
       }
     }
   }else{
-    console.log("dwadaw")
     if(whitelists.indexOf(to.path)!==-1) {
       //在白名单中的页面继续执行
       next()

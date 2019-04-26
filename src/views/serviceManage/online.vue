@@ -215,7 +215,7 @@
             introduction:'',
             format:'',
             detailIntroduction:'',
-            is_other:1
+            isOther:1
 
           },
           rules: {
@@ -471,6 +471,7 @@
         createData() {
           this.$refs['dataForm'].validate((valid) => {
             if(valid) {
+              this.Temp.checked = 1
               createService(this.Temp).then(response => {
                 this.dialogFormVisible = false
                 this.resetTemp()

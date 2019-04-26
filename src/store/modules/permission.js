@@ -10,8 +10,8 @@ import { asyncRouterMap, constantRouterMap } from '@/router'
  */
 function hasPermission(role, route) {
   if (route.meta && route.meta.roles) {
-    if(route.meta.roles.indexOf(role)===-1) return false
-    else return true
+    if(route.meta.roles.indexOf(role)!==-1) return true
+    else return false
   } else {
     return true
   }
@@ -27,14 +27,13 @@ function filterAsyncRouter(routes, role) {
   //console.log('asyncRouterMap:'+typeof asyncRouterMap)
   //console.log('constantRouterMap:'+typeof constantRouterMap)
   routes.forEach(route => {
-    //console.log('route是'+route)
     const tmp = { ...route }
     if (hasPermission(role, tmp)) {
-      console.log('添加一个')
+      res.push(tmp)
       if (tmp.children) {
         tmp.children = filterAsyncRouter(tmp.children, role)
       }
-      res.push(tmp)
+
     }
   })
   // for(route in routes) {
@@ -48,7 +47,6 @@ function filterAsyncRouter(routes, role) {
   //     }
   // }
 
-  console.log('res是'+res)
 
   return res
 }
@@ -69,12 +67,11 @@ const permission = {
       return new Promise(resolve => {
         const { role } = data
         let accessedRouters
-        // if (roles.includes('admin')) {
-        //   accessedRouters = asyncRouterMap
-        // } else {
-        //   accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
-        // }
-        accessedRouters = filterAsyncRouter(asyncRouterMap, role)
+        if (role==1) {
+          accessedRouters = asyncRouterMap
+        } else {
+          accessedRouters = filterAsyncRouter(asyncRouterMap, role)
+        }
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })

@@ -14,7 +14,7 @@ export default {
   name:"Dashboard",
 
   computed:{
-    //...是对象展开运算符，可以把一个对象混入到外部对象中，这里把mapGetters混入到了计算属性中
+    // ...是对象展开运算符，可以把一个对象混入到外部对象中，这里把mapGetters混入到了计算属性中
     // ...mapGetters([
     //   'name',
     //   'role'
@@ -25,8 +25,8 @@ export default {
     },
     getAdminType(){
       if(this.$store.getters.role===1) return '超级管理员'
-      else if(this.$store.getters.role.role===2) return '服务管理员'
-      else if(this.$store.getters.role.role===3) return '业务管理员'
+      else if(this.$store.getters.role===2) return '服务管理员'
+      else if(this.$store.getters.role===3) return '业务管理员'
       else $store.dispatch('/404')
     }
   },

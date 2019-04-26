@@ -215,6 +215,11 @@ export const asyncRouterMap = [
   {
     path:'/log',
     component:Layout,
+    meta:{
+      title:'日志信息查看',
+      icon:'log',
+      roles:[1,2]
+    },
     children: [
       {
         path: 'index',
@@ -231,6 +236,7 @@ export const asyncRouterMap = [
   {
     path: '/config',
     component: Layout,
+    meta: { title: '服务配置中心',icon:'config',roles:[1,2] },
     children: [
       {
         path: 'http://192.168.12.108:8001/zhangtianhao/config',
@@ -238,7 +244,6 @@ export const asyncRouterMap = [
       }
     ]
   },
-
   //最后挂载404
   { path: '*', redirect: '/404', hidden: true }
 ]
