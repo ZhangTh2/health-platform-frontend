@@ -104,6 +104,7 @@ export const asyncRouterMap = [
   {
     path: '/serviceCategory',
     component: Layout,
+    meta: { title: '服务类别', icon:'category',roles:[1] },
     children: [
       {
         path: 'index',
@@ -119,6 +120,7 @@ export const asyncRouterMap = [
     hidden:true,
     children: [
       {
+        hidden:true,
         path: '',
         component: () => import('@/views/api/index'),
         name: 'api',
@@ -132,7 +134,7 @@ export const asyncRouterMap = [
     meta:{
       title:'服务管理',
       icon:'service',
-      roles:[1]
+      roles:[1,2]
     },
     children:[
       {
@@ -152,6 +154,7 @@ export const asyncRouterMap = [
   {
     path:'/order',
     component:Layout,
+    meta: { title: '服务类别', icon:'category',roles:[1,3] },
     children: [
       {
         path: 'index',
@@ -179,7 +182,7 @@ export const asyncRouterMap = [
         component:() => import('@/views/turbine/eureka'),
         name:'eureka',
         meta:{
-          title:"Eureka"
+          title:"注册中心"
         }
       },
       {
@@ -187,9 +190,25 @@ export const asyncRouterMap = [
         component:() => import('@/views/turbine/hystrix-dashboard'),
         name:'Hystrix-Dashboard',
         meta:{
-          title:"Hystrix-Dashboard"
+          title:"监控面板"
+        }
+      },
+      {
+        path:'zipkin',
+        component:() => import('@/views/turbine/zipkin'),
+        name:'Zipkin',
+        meta:{
+          title:"链路追踪"
         }
       }
+      // {
+      //   path:'config',
+      //   component:() => import('@/views/turbine/config'),
+      //   name:'config',
+      //   meta:{
+      //     title:"配置中心"
+      //   }
+      // }
     ]
 
   },
@@ -208,9 +227,17 @@ export const asyncRouterMap = [
         }
       }
     ]
-
   },
-
+  {
+    path: '/config',
+    component: Layout,
+    children: [
+      {
+        path: 'http://192.168.12.108:8001/zhangtianhao/config',
+        meta: { title: '服务配置中心',icon:'config',roles:[1,2] }
+      }
+    ]
+  },
 
   //最后挂载404
   { path: '*', redirect: '/404', hidden: true }

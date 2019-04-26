@@ -55,7 +55,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true
+      inject: true,
+      favicon: path.resolve('favicon.ico') // 图标新增
     }),
     // new webpack.ProvidePlugin({
     //   jQuery:'jquery',

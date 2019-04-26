@@ -91,7 +91,7 @@
           </el-col>
         </el-row>
         <el-form-item label="Headers">
-            <el-form-item v-for="(header,index) in Headers">
+            <el-form-item v-for="(header,index) in Headers" :key="index">
               <el-form :inline="true" :model="header">
                 <el-form-item >
                   <el-input v-model="header.name" placeholder="参数名称" style="width: 400px;margin-top: 5px">
@@ -112,7 +112,7 @@
         </el-form-item>
 
         <el-form-item label="Request Parameters">
-          <el-form-item v-for="(param,index) in Params">
+          <el-form-item v-for="(param,index) in Params" :key="index">
             <el-form :inline="true" :model="param">
               <el-form-item >
                 <el-input v-model="param.name" placeholder="参数名称" style="width: 400px;margin-top: 5px">
@@ -162,7 +162,7 @@
           </el-col>
         </el-row>
         <el-form-item label="返回参数">
-          <el-form-item v-for="(result,index) in resultArguments">
+          <el-form-item v-for="(result,index) in resultArguments" :key="index">
             <el-form :inline="true" :model="result">
               <el-form-item >
                 <el-input v-model="result.name" placeholder="返回参数名称" style="width: 400px;margin-top: 5px">
@@ -182,7 +182,7 @@
           <el-button v-show="resultArguments.length" type="primary" size="medium" @click="resetResults">清空</el-button>
         </el-form-item>
         <el-form-item label="错误码" prop="errorCode">
-          <el-form-item v-for="(errorcode,index) in errorCodes">
+          <el-form-item v-for="(errorcode,index) in errorCodes" :key="index">
             <el-form :inline="true" :model="errorcode">
               <el-form-item >
                 <el-input-number v-model="errorcode.value" :controls="false" :min="0" style="margin-top: 5px">
