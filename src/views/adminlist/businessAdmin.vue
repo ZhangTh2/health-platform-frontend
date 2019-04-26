@@ -144,6 +144,12 @@
   export default {
     name:"AdminListTable",
     components:{Pagination},
+    doNotInit:true,
+    route:{
+      data() {
+        return this.fetchDataByCondition;
+      }
+    },
     filters: {
       statusFilter(status) {
         const statusMap = {
@@ -311,7 +317,11 @@
     },
     created() {
      // this.fetchData()
-      this.fetchDataByCondition()
+      let option = this.$options.doNotInit
+      if(!option) {
+        this.fetchDataByCondition()
+      }
+
     },
     methods: {
       closeDialog(){

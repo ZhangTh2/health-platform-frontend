@@ -167,6 +167,12 @@
   export default {
     name: "onlineServiceManage",
     components:{Pagination},
+    doNotInit:true,
+    route:{
+      data() {
+        return this.fetchService;
+      }
+    },
     filters: {
       statusFilter(status) {
         const statusMap = {
@@ -181,7 +187,11 @@
     },
     created(){
       this.fetchServiceCategories()
-      this.fetchService()
+      let option = this.$options.doNotInit
+      if(!option) {
+
+        this.fetchService()
+      }
     },
     data(){
       return {
