@@ -159,7 +159,8 @@
         const statusMap = {
           1: 'success',
           0: 'info',
-          2: 'danger'
+          2: 'danger',
+          3: 'warning'
         }
         return statusMap[status]
       }
