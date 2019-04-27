@@ -306,7 +306,7 @@
               message: '审核服务失败'
             })
           }else{
-            row.checked = 1;
+            row.checked = 4;
             this.$message({
               type: 'success',
               message: '审核服务成功'

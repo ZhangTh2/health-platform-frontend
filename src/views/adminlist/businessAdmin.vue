@@ -62,6 +62,8 @@
           </el-button>
           <el-button v-if="scope.row.checked==0" type="success" size="mini" @click="handleCheck(scope.row)">通过
           </el-button>
+          <el-button v-if="scope.row.checked==0" type="success" size="mini" @click="handleUnCheck(scope.row)">不通过
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -139,7 +141,7 @@
   import {searchAdmin} from '@/api/admin';
   import {deleteAdmin} from "@/api/admin";
   import {getAdminById} from "@/api/admin";
-  import {checkAdmin,ifexistAdmin,createAdmin,updateAdmin,getTotal} from "@/api/admin";
+  import {checkAdmin,ifexistAdmin,createAdmin,updateAdmin,getTotal,uncheckAdmin} from "@/api/admin";
 
   export default {
     name:"AdminListTable",
@@ -312,7 +314,11 @@
         }, {
           value: '2',
           label: '离职'
-        }],
+        },
+          {
+            value:'3',
+            label:'审核未通过'
+          }],
       }
     },
     created() {
@@ -324,6 +330,37 @@
 
     },
     methods: {
+      handleUnCheck(row){
+        this.$prompt('请输入审核不通过的理由', '提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            inputPattern: /\S/,
+            inputErrorMessage: '理由不能为空'
+          }
+        ).then(({value}) => {
+          uncheckAdmin(row.id, value).then(response => {
+            if (response.status != 10000) {
+              this.$message({
+                type: 'error',
+                message: '审核失败'
+              })
+            } else {
+              row.checked = 3;
+              this.$message({
+                type: 'success',
+                message: '审核成功'
+              })
+            }
+          })
+        })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '取消输入'
+            });
+          });
+      },
       closeDialog(){
         this.resetTemp()
       },
@@ -363,7 +400,8 @@
       handlestatus(checked) {
         if (checked === 0) return '待审核'
         else if (checked === 1) return '在职'
-        else return '离职'
+        else if(checked ===2) return '离职'
+        else return'审核未通过'
       },
       handleUpdate(id) {
         getAdminById(id).then(response => {

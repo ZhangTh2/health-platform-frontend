@@ -37,6 +37,15 @@ export function checkAdmin(id) {
   })
 }
 
+export function uncheckAdmin(id,remarks) {
+  console.log("uncheckAdmin")
+  return request({
+    url:'/api/admin/uncheckAdmin',
+    method: 'get',
+    params: { id,remarks},
+  })
+}
+
 //验证该用户名是否已经被使用
 export function ifexistAdmin(name) {
   console.log("验证该用户名是否已经被使用")

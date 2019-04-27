@@ -167,6 +167,7 @@
           phone: '',
           email: '',
           bankType: '',
+          checked:0,
           accountNumber: '',
         },
         rules: {

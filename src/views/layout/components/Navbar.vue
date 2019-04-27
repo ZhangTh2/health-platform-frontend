@@ -104,10 +104,9 @@
 
     </div>
 
-    <el-dialog :title="dialogStatus":visible.sync="dialogFormVisible" >
-      <el-form>
-      <el-form-item >
+    <el-dialog :title="dialogStatus":visible.sync="dialogFormVisible"   style="margin-left: 600px;width: 800px">
         <el-upload
+          style="text-align: center"
           class="avatar-uploader"
           action="/api/admin/insertImg"
           :show-file-list="false"
@@ -116,17 +115,15 @@
           <img v-if="imgUrl" :src="imgUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        <div v-if="dialogStatus==='上传头像'">
+        <div v-if="dialogStatus==='上传头像'"  style="text-align: center">
           <span  v-if="imgUrl">已选择{{this.imageName}},可点击图片更改</span>
           <span  v-else >只能上传单张10M以下的 PNG、JPG、GIFJPEG格式的图片</span>
         </div>
-        <div v-else>
+        <div v-else  style="text-align: center">
           <span  v-if="imgUrl">可点击图片更改</span>
           <span  v-else >只能上传单张10M以下的 PNG、JPG、GIFJPEG格式的图片</span>
         </div>
-      </el-form-item>
 
-      </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel()">取消</el-button>
         <!--<el-button type="primary" @click="dialogStatus==='添加管理员'?createData():updateData()">确认</el-button>-->
