@@ -263,7 +263,8 @@
           })
         },
         handleOptions(value) {
-          this.listQuery.category_id = value[value.length-1]
+          if(value.length===0) this.listQuery.category_id=''
+          else this.listQuery.category_id = value[value.length-1]
         },
         handleOptions1(value) {
           this.Temp.categoryId = value[value.length-1]
