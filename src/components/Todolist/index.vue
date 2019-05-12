@@ -25,7 +25,6 @@ export default {
       },
       created() {
           getUnckeck().then(response=>{
-            console.log('获取未审核'+response.data+'类型是'+typeof response.data)
             var no =response.data
             if(no["service"] !==0) {
               this.notify.push(no["service"]+'个待审核的服务管理员')
@@ -35,7 +34,6 @@ export default {
             }
           })
         getUncheckService().then(response=>{
-          console.log("获取未审核的服务数量")
           var service=response.data
           if(service["online"] !==0) {
             this.notify.push(service["online"]+'个待审核的线上服务')
@@ -43,7 +41,7 @@ export default {
           if(service['offline'] !==0) {
             this.notify.push(service["offline"]+'个待审核的线下服务')
           }
-          if(this.notify.length == 0)
+          if(this.notify.length === 0)
             this.iconClass='notify1'
         })
 

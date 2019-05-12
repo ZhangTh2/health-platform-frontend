@@ -62,12 +62,12 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="Address"  prop="address" :required="true">
+            <el-form-item label="主机地址"  prop="address" :required="true">
               <el-input   type ="text"  placeholder="Host : Port" v-model="Temp.address" style="width: 300px" ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="path" prop="path" :required="true">
+            <el-form-item label="接口地址" prop="path" :required="true">
               <el-input   type ="text"   v-model="Temp.path" style="width: 300px" ></el-input>
             </el-form-item>
           </el-col>
@@ -82,7 +82,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="HTTP methods" prop="httpMethod" :required="true">
+            <el-form-item label="HTTP方法" prop="httpMethod" :required="true">
               <template>
                 <el-radio v-model="Temp.httpMethod" :label="1">GET</el-radio>
                 <el-radio v-model="Temp.httpMethod" :label="2">POST</el-radio>
@@ -90,7 +90,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="Headers">
+        <el-form-item label="请求头部">
             <el-form-item v-for="(header,index) in Headers" :key="index">
               <el-form :inline="true" :model="header">
                 <el-form-item >
@@ -111,7 +111,7 @@
           <el-button v-show="Headers.length" type="primary" size="medium" @click="resetHeaders">清空</el-button>
         </el-form-item>
 
-        <el-form-item label="Request Parameters">
+        <el-form-item label="请求参数">
           <el-form-item v-for="(param,index) in Params" :key="index">
             <el-form :inline="true" :model="param">
               <el-form-item >

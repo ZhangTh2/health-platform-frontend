@@ -39,6 +39,13 @@ module.exports = {
           '^/qbs':'/'
         }
       },
+      '/eur':{
+        target:'http://192.168.12.109:1111',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/eur':'/'
+        }
+      }
     },
 
     // Various Dev Server settings

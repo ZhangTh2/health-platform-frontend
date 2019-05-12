@@ -6,7 +6,6 @@ import { getToken } from '@/utils/auth'
 
 // 创建axios实例
 const service = axios.create({
- // baseURL: 'http://localhost:1234', // api 的 base_url
   timeout: 5000 // 请求超时时间
 })
 
@@ -14,8 +13,6 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
-     // console.log("request头中加入Token")
-      //console.log(getToken())
       config.headers['Authorization'] =`Bearer `+getToken()
       //config.withCredentials=true
     }
@@ -34,9 +31,7 @@ service.interceptors.response.use(
     /**
      * code为非10000是抛错
      */
-    console.log("获取")
     const res = response.data
-    console.log(res)
 
     if (res.status !== 10000) {
       Message({
@@ -61,7 +56,6 @@ service.interceptors.response.use(
           })
         })
       }
-      console.log("报错")
       return Promise.reject('error')
     } else {
       console.log("获取成功")
@@ -69,7 +63,6 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
     Message({
       message: error.message,
       type: 'error',

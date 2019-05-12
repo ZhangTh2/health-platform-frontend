@@ -180,7 +180,8 @@ export const asyncRouterMap = [
     children: [
       {
         path:'eureka',
-        component:() => import('@/views/turbine/eureka'),
+        //component:() => import('@/views/turbine/eureka'),
+        component:() => import('@/views/Discovery/index'),
         name:'eureka',
         meta:{
           title:"注册中心"

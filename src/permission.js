@@ -22,7 +22,6 @@ router.beforeEach((to,from,next) => {
       next({path:'/'})
       NProgress.done()
     }else{
-      console.log(store.getters.role)
       if(store.getters.role==='') {
         store.dispatch('GetAdminInfo').then(res =>{
           const role = res.data.role
