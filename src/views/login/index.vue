@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form  ref="loginForm" :model="loginForm"  :rules ="loginRules" class= "login-form" label-position="left">
       <div class="title-container">
-      <h4 class="title">Welcome Back</h4>
+      <h4 class="title">养老健康服务集成平台</h4>
       </div>
       <el-form-item prop="username">
         <span class="svg-container">
@@ -37,7 +37,7 @@
     </el-form>
     <div class="text-center">
       <!--<a class="small" style="color: #ffffff;"href="/register">Create an Account!</a>-->
-      <router-link class="small" style="color: #ffffff;"to="/register">Create an Account!</router-link>
+      <router-link class="small" style="color: #ffffff;"to="/register">创建账号!</router-link>
       <router-view ></router-view>
     </div>
   </div>
@@ -57,13 +57,13 @@
             callback()
           }
         }
-        // const validatePass =(rule,value,callback) => {
-        //   if(value.length < 5) {
-        //     callback(new Error('密码不能少于5位'))
-        //   }else{
-        //     callback()
-        //   }
-        // }
+        const validatePass =(rule,value,callback) => {
+          if(value.length < 5) {
+            callback(new Error('密码不能少于5位'))
+          }else{
+            callback()
+          }
+        }
         return {
           loginForm:{
             username:'',
@@ -71,7 +71,7 @@
           },
           loginRules:{
             username:[{required:true,trigger:'blur',validator:validateUsername}],
-            // password:[{required:true,trigger:'blur',validator:validatePass}]
+             password:[{required:true,trigger:'blur',validator:validatePass}]
           },
           loading:false,
           pwdType:'password',
@@ -100,7 +100,6 @@
               //登录成功后载入的动画效果，重定向到首页
               this.loading=true
               this.$store.dispatch('Login',this.loginForm).then(() =>{
-                console.log("登录函数走完了")
                 this.loading = false
                 this.$router.push({path:this.redirect||'/'})
               }).catch(()=> {

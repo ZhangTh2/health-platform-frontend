@@ -86,7 +86,6 @@ export const asyncRouterMap = [
         component: () => import('@/views/adminlist/serviceAdmin'),
         meta:{
           title:'服务管理员',
-          // icon:'adminuser_list',
           roles:[1]
         }
       },
@@ -96,7 +95,6 @@ export const asyncRouterMap = [
         component:()=>import('@/views/adminlist/businessAdmin'),
         meta:{
           title:'业务管理员',
-          // icon:'businessadmin_list',
           roles:[1]
         }
       }
@@ -152,35 +150,35 @@ export const asyncRouterMap = [
       }
     ]
   },
-  {
-    path:'/order',
-    component:Layout,
-    meta: { title: '服务类别', icon:'category',roles:[1,3] },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/order/index'),
-        name: 'order',
-        meta:{
-          title:'订单管理',
-          icon:'order',
-          roles:[1,3]
-        }
-      }
-    ]
-  },
+  // {
+  //   path:'/order',
+  //   component:Layout,
+  //   meta: { title: '服务类别', icon:'category',roles:[1,3] },
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/order/index'),
+  //       name: 'order',
+  //       meta:{
+  //         title:'订单管理',
+  //         icon:'order',
+  //         roles:[1,3]
+  //       }
+  //     }
+  //   ]
+  // },
+
   {
     path:'/turbine',
     component:Layout,
     meta:{
-      title:'监控信息查看',
+      title:'系统信息查看',
       icon:'turbine',
       roles:[1,2]
     },
     children: [
       {
         path:'eureka',
-        //component:() => import('@/views/turbine/eureka'),
         component:() => import('@/views/Discovery/index'),
         name:'eureka',
         meta:{
@@ -188,11 +186,19 @@ export const asyncRouterMap = [
         }
       },
       {
+        path:'admin',
+        component:() => import('@/views/turbine/admin'),
+        name:'admin',
+        meta:{
+          title:"监控中心"
+        }
+      },
+      {
         path:'hystrix-dashboard',
         component:() => import('@/views/turbine/hystrix-dashboard'),
         name:'Hystrix-Dashboard',
         meta:{
-          title:"监控面板"
+          title:"微服务调用"
         }
       },
       {

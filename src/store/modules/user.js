@@ -84,17 +84,13 @@ const user = {
            // Lockr.set('role',data.role)
           }
           commit('SET_NAME',data.username)
-
           if(data.avatar===''){
             console.log("无头像")
           }else {
             commit('SET_AVATAR',data.avatar)
           }
-          //Lockr.set('name',data.name)
           resolve(response)
-          //设置头像，暂时没有
         })
-
       }).catch(error => {
         console.log("获取用户信息是报错了"+error)
         reject(error)

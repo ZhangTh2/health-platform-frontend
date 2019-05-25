@@ -1,13 +1,15 @@
 <template>
   <div class="app-container">
-    <h1>养老服务注册中心</h1>
+    <h1 >养老服务注册中心</h1>
   <br/>
     <h3>服务信息</h3>
     <el-table
       v-loading="listloading"
       :data="applist"
+      stripe=true
       fit
       highlight-current-row
+      :header-cell-style='tableHeaderStyle'
       style="width: 100%">
       <el-table-column
         prop="name"
@@ -32,6 +34,8 @@
       v-loading="listloading"
       :data="instancelist"
       fit
+      :header-cell-style='tableHeaderStyle'
+      stripe=true
       highlight-current-row
       style="width: 100%">
       <el-table-column
@@ -89,7 +93,9 @@
     <el-table
       :data="systemInfo"
       fit
+      :header-cell-style='tableHeaderStyle'
       highlight-current-row
+      stripe=true
       style="width: 100%">
       <el-table-column
         prop="name"
@@ -132,6 +138,10 @@
           applist:[],
           instancelist:[],
           listloading:false,
+          tableHeaderStyle:{
+            'background':'#8080C0',
+            'color':'#fff',
+          },
           systemInfo:[
             {
 
@@ -161,6 +171,14 @@
             {
               name:'是否启动租约过期',
               value:'否'
+            },
+            {
+              name:'备用节点',
+              value:'192.168.12.108'
+            },
+            {
+              name:'可用备用节点',
+              value:'192.168.12.108'
             }
           ]
 
