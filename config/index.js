@@ -46,6 +46,13 @@ module.exports = {
         pathRewrite:{
           '^/eur':'/'
         }
+      },
+      '/tgp':{
+        target:'http://192.168.12.109:8036',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/tgp':'/'
+        }
       }
     },
 

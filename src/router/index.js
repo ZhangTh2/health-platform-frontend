@@ -252,6 +252,19 @@ export const asyncRouterMap = [
       }
     ]
   },
+  {
+    path: '/ServiceExamine',
+    component: Layout,
+    meta: { title: '服务申请审核', icon:'user',roles:[1] },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/ServiceExamine/index'),
+        name: 'ServiceExamine',
+        meta: { title: '服务申请审核', icon:'user',roles:[1] }
+      }
+    ]
+  },
   //最后挂载404
   { path: '*', redirect: '/404', hidden: true }
 ]
